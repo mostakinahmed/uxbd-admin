@@ -233,13 +233,13 @@ const AdminDashboard = () => {
                 <section className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden">
 
                     {/* Header */}
-                    <div className="px-6 md:py-5 py-3 bg-amber-200 border-b border-gray-200 flex justify-between items-center">
+                    <div className="px-6 md:py-4 py-3 bg-amber-200 border-b border-gray-200 flex justify-between items-center">
 
                         <h3 className="md:text-xl text-lg font-black text-gray-800">
                             অর্ডার লিস্ট
                         </h3>
 
-                        <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full">
+                        <span className="bg-white text-green-700 text-xs font-bold px-4 py-1.5 rounded-full">
                             মোট {filteredOrders.length} টি
                         </span>
 
