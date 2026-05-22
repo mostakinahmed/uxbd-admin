@@ -122,7 +122,7 @@ const AdminDashboard = () => {
 
                         </div>
                     </div>
-                    <div className="flex md:gap-10 gap-4">
+                    <div className="flex md:gap-7 gap-4">
 
                         <button
                             onClick={() => window.open("https://uniquexpress.online/", "_blank")}
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
             
                         <button
                             onClick={handleLogout}
-                            className="bg-red-500 text-white font-medium md:px-5 px-2 text-xs md:text-sm rounded-full"
+                            className="bg-red-500 text-white font-medium md:px-5 px-2 text-xs md:text-sm rounded-xl"
                         >
                             Logout
                         </button>
