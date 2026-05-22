@@ -116,22 +116,25 @@ const AdminDashboard = () => {
 
                         <div>
                             <h1 className="md:text-2xl text-lg font-black bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
-                                UniqueExpressBD
+                                UniquexpressBD
                             </h1>
 
 
                         </div>
                     </div>
                     <div className="flex md:gap-10 gap-4">
-                        <div className="flex items-center gap-2 md:bg-green-100 md:px-4 px-2 py-2 rounded-full">
-                            <span className="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
-                            <span className="md:text-sm text-xs font-bold text-green-700">
-                                Live
-                            </span>
-                        </div>
+
+                        <button
+                            onClick={() => window.open("https://uniquexpress.online/", "_blank")}
+                            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-sm text-white px-5 py-2 rounded-xl font-medium shadow-lg hover:scale-105 transition-all duration-300"
+                        >
+                            🌐 Go Website
+                        </button>
+
+            
                         <button
                             onClick={handleLogout}
-                            className="bg-red-500 text-white font-medium md:px-4 px-2 text-xs md:text-[15px] rounded-xl"
+                            className="bg-red-500 text-white font-medium md:px-5 px-2 text-xs md:text-sm rounded-full"
                         >
                             Logout
                         </button>
