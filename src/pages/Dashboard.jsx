@@ -11,6 +11,8 @@ import {
     CheckCircle2,
     RotateCcw
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 const AdminDashboard = () => {
 
@@ -30,7 +32,13 @@ const AdminDashboard = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const itemsPerPage = 4;
+    const navigate = useNavigate();
+    const handleLogout = () => {
 
+        localStorage.removeItem("adminLoggedIn");
+
+        navigate("/");
+    };
     // Metrics
     const metrics = useMemo(() => {
         const todayOrders = orders.filter(o => o.date === "2026-05-22");
@@ -107,22 +115,28 @@ const AdminDashboard = () => {
                         </div>
 
                         <div>
-                            <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
+                            <h1 className="md:text-2xl text-lg font-black bg-gradient-to-r from-green-600 to-orange-500 bg-clip-text text-transparent">
                                 UniqueExpressBD
                             </h1>
 
-                            <p className="text-xs font-semibold text-gray-500">
-                                Mango Sales Admin Panel
-                            </p>
+                          
                         </div>
                     </div>
-
-                    <div className="flex items-center gap-2 bg-green-100 px-4 py-2 rounded-full">
+                   <div className="flex md:gap-10 gap-4">
+  <div className="flex items-center gap-2 md:bg-green-100 md:px-4 px-2 py-2 rounded-full">
                         <span className="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
-                        <span className="text-sm font-bold text-green-700">
-                            Live View
+                        <span className="md:text-sm text-xs font-bold text-green-700">
+                            Live 
                         </span>
                     </div>
+                     <button
+                        onClick={handleLogout}
+                        className="bg-red-500 text-white font-medium md:px-4 px-2 text-xs md:text-md rounded-xl"
+                    >
+                        Logout
+                    </button>
+                   </div>
+                  
 
                 </div>
             </header>
@@ -197,8 +211,8 @@ const AdminDashboard = () => {
                                 key={tab}
                                 onClick={() => handleFilter(tab)}
                                 className={`px-5 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${statusFilter === tab
-                                        ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg"
-                                        : "text-gray-600 hover:bg-white"
+                                    ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg"
+                                    : "text-gray-600 hover:bg-white"
                                     }`}
                             >
                                 {tab === "All" && "সব অর্ডার"}
@@ -218,7 +232,7 @@ const AdminDashboard = () => {
                     {/* Header */}
                     <div className="px-6 py-5 bg-gradient-to-r from-gray-100 to-gray-50 border-b border-gray-200 flex justify-between items-center">
 
-                        <h3 className="text-xl font-black text-gray-800">
+                        <h3 className="md:text-xl text-lg font-black text-gray-800">
                             অর্ডার লিস্ট
                         </h3>
 
@@ -311,8 +325,8 @@ const AdminDashboard = () => {
 
                                                 <span
                                                     className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-black border ${order.status === "Delivered"
-                                                            ? "bg-emerald-100 text-emerald-700 border-emerald-200"
-                                                            : "bg-orange-100 text-orange-700 border-orange-200"
+                                                        ? "bg-emerald-100 text-emerald-700 border-emerald-200"
+                                                        : "bg-orange-100 text-orange-700 border-orange-200"
                                                         }`}
                                                 >
 
@@ -403,8 +417,8 @@ const AdminDashboard = () => {
                                         setCurrentPage(prev => prev - 1)
                                     }
                                     className={`w-10 h-10 rounded-xl border flex items-center justify-center transition ${currentPage === 1
-                                            ? "opacity-40 cursor-not-allowed bg-gray-100"
-                                            : "bg-white hover:bg-green-50"
+                                        ? "opacity-40 cursor-not-allowed bg-gray-100"
+                                        : "bg-white hover:bg-green-50"
                                         }`}
                                 >
                                     <ChevronLeft size={18} />
@@ -422,8 +436,8 @@ const AdminDashboard = () => {
                                                 setCurrentPage(page)
                                             }
                                             className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${currentPage === page
-                                                    ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg"
-                                                    : "bg-white border border-gray-200 hover:bg-green-50"
+                                                ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg"
+                                                : "bg-white border border-gray-200 hover:bg-green-50"
                                                 }`}
                                         >
                                             {page}
@@ -438,8 +452,8 @@ const AdminDashboard = () => {
                                         setCurrentPage(prev => prev + 1)
                                     }
                                     className={`w-10 h-10 rounded-xl border flex items-center justify-center transition ${currentPage === totalPages
-                                            ? "opacity-40 cursor-not-allowed bg-gray-100"
-                                            : "bg-white hover:bg-green-50"
+                                        ? "opacity-40 cursor-not-allowed bg-gray-100"
+                                        : "bg-white hover:bg-green-50"
                                         }`}
                                 >
                                     <ChevronRight size={18} />
@@ -470,7 +484,7 @@ const MetricCard = ({
 
     return (
 
-        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-3xl border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:scale-[1.02] transition-all duration-300">
+        <div className="bg-white backdrop-blur-xl p-6 rounded-3xl border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:scale-[1.02] transition-all duration-300">
 
             <div className="flex items-center justify-between">
 
@@ -480,7 +494,7 @@ const MetricCard = ({
                         {title}
                     </p>
 
-                    <h2 className="text-4xl font-black mt-2 text-gray-900">
+                    <h2 className="md:text-4xl text-2xl font-black mt-2 text-gray-900">
                         {value}
                     </h2>
 

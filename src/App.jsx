@@ -1,23 +1,45 @@
-import { Routes, Route } from "react-router-dom";
-import "./index.css";
-import AdminDashboard from "./page/Dashboard";
+import React from "react";
+import {
+    Routes,
+    Route,
+    Navigate
+} from "react-router-dom";
 
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+const App = () => {
 
+    return (
 
-  return (
-    <Routes>
+        <Routes>
 
-      {/* Layout with Sidebar */}
-      <Route>
-        <Route path="/" element={<AdminDashboard />} />
+            {/* Login */}
+            <Route
+                path="/"
+                element={<Login />}
+            />
 
+            {/* Dashboard */}
+            <Route
+                path="/dashboard"
+                element={
+                    <ProtectedRoute>
+                        <Dashboard />
+                    </ProtectedRoute>
+                }
+            />
 
-      </Route>
+            {/* Redirect */}
+            <Route
+                path="*"
+                element={<Navigate to="/" />}
+            />
 
-    </Routes>
-  );
-}
+        </Routes>
+
+    );
+};
 
 export default App;
