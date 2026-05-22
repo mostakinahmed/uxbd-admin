@@ -103,7 +103,7 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#7fb2e6] via-[#e0db9b] to-[#daf7a1] font-sans text-gray-800">
+        <div className="min-h-screen bg-blue-100 font-sans text-gray-800">
 
             {/* Navbar */}
             <header className="sticky top-0 z-40 backdrop-blur-xl bg-white border-b border-white/20 shadow-sm">
@@ -119,30 +119,30 @@ const AdminDashboard = () => {
                                 UniqueExpressBD
                             </h1>
 
-                          
+
                         </div>
                     </div>
-                   <div className="flex md:gap-10 gap-4">
-  <div className="flex items-center gap-2 md:bg-green-100 md:px-4 px-2 py-2 rounded-full">
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
-                        <span className="md:text-sm text-xs font-bold text-green-700">
-                            Live 
-                        </span>
+                    <div className="flex md:gap-10 gap-4">
+                        <div className="flex items-center gap-2 md:bg-green-100 md:px-4 px-2 py-2 rounded-full">
+                            <span className="w-2 h-2 rounded-full bg-green-500 animate-ping"></span>
+                            <span className="md:text-sm text-xs font-bold text-green-700">
+                                Live
+                            </span>
+                        </div>
+                        <button
+                            onClick={handleLogout}
+                            className="bg-red-500 text-white font-medium md:px-4 px-2 text-xs md:text-[15px] rounded-xl"
+                        >
+                            Logout
+                        </button>
                     </div>
-                     <button
-                        onClick={handleLogout}
-                        className="bg-red-500 text-white font-medium md:px-4 px-2 text-xs md:text-md rounded-xl"
-                    >
-                        Logout
-                    </button>
-                   </div>
-                  
+
 
                 </div>
             </header>
 
             {/* Main */}
-            <main className="max-w-7xl mx-auto px-4 lg:px-8 py-8 space-y-8">
+            <main className="max-w-7xl mx-auto px-4 lg:px-8 md:py-8 py-4 space-y-5">
 
                 {/* Cards */}
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -183,7 +183,7 @@ const AdminDashboard = () => {
                 </section>
 
                 {/* Filters */}
-                <section className="bg-white/70 backdrop-blur-xl border border-white/30 shadow-xl rounded-3xl p-5 flex flex-col lg:flex-row gap-4 justify-between items-center">
+                <section className="bg-slate-800 backdrop-blur-xl border border-white/30 shadow-xl rounded-b-3xl p-5 flex flex-col lg:flex-row gap-4 justify-between items-center">
 
                     {/* Search */}
                     <div className="relative w-full lg:w-96">
@@ -198,12 +198,12 @@ const AdminDashboard = () => {
                             placeholder="নাম, ফোন বা অর্ডার আইডি খুঁজুন..."
                             value={searchTerm}
                             onChange={handleSearch}
-                            className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-md shadow-sm focus:ring-4 focus:ring-green-200 outline-none transition"
+                            className="w-full pl-11 pr-4 py-3 placeholder:text-slate-800 rounded-2xl border border-gray-200 bg-white backdrop-blur-md shadow-sm focus:ring-4 focus:ring-green-600 outline-none transition"
                         />
                     </div>
 
                     {/* Filter Tabs */}
-                    <div className="flex bg-gray-100 p-1.5 rounded-2xl gap-2">
+                    <div className="flex bg-white p-1.5 rounded-2xl gap-2">
 
                         {["All", "Pending", "Delivered"].map(tab => (
 
@@ -230,7 +230,7 @@ const AdminDashboard = () => {
                 <section className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden">
 
                     {/* Header */}
-                    <div className="px-6 py-5 bg-amber-200 border-b border-gray-200 flex justify-between items-center">
+                    <div className="px-6 md:py-5 py-3 bg-amber-200 border-b border-gray-200 flex justify-between items-center">
 
                         <h3 className="md:text-xl text-lg font-black text-gray-800">
                             অর্ডার লিস্ট
@@ -484,27 +484,25 @@ const MetricCard = ({
 
     return (
 
-        <div className="bg-white backdrop-blur-xl p-6 rounded-3xl border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:scale-[1.02] transition-all duration-300">
+        <div className="bg-white backdrop-blur-xl px-6 py-3 rounded-t-3xl border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:scale-[1.02] transition-all duration-300">
 
             <div className="flex items-center justify-between">
 
                 <div>
 
-                    <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">
+                    <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">
                         {title}
                     </p>
 
-                    <h2 className="md:text-4xl text-2xl font-black mt-2 text-gray-900">
+                    <h2 className="md:text-3xl text-2xl font-black mt-2 text-gray-900">
                         {value}
                     </h2>
 
-                    <p className="text-xs mt-2 text-green-600 font-bold">
-                        {subtitle}
-                    </p>
+
 
                 </div>
 
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradient} text-white flex items-center justify-center shadow-lg`}>
+                <div className={`md:w-14 md:h-14 w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} text-white flex items-center justify-center shadow-lg`}>
                     {icon}
                 </div>
 
