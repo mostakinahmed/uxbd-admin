@@ -230,7 +230,7 @@ const AdminDashboard = () => {
                 <section className="bg-white/70 backdrop-blur-xl rounded-3xl border border-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.06)] overflow-hidden">
 
                     {/* Header */}
-                    <div className="px-6 py-5 bg-gradient-to-r from-gray-100 to-gray-50 border-b border-gray-200 flex justify-between items-center">
+                    <div className="px-6 py-5 bg-amber-200 border-b border-gray-200 flex justify-between items-center">
 
                         <h3 className="md:text-xl text-lg font-black text-gray-800">
                             অর্ডার লিস্ট
@@ -247,9 +247,9 @@ const AdminDashboard = () => {
 
                         <table className="w-full whitespace-nowrap">
 
-                            <thead>
+                            <thead >
 
-                                <tr className="text-center text-sm uppercase tracking-wider text-gray-500 border-b border-gray-100">
+                                <tr className="text-center text-sm uppercase tracking-wider text-slate-600 border-b border-gray-200">
 
                                     <th className="px-6 py-4">অর্ডার আইডি</th>
                                     <th className="px-6 py-4">কাস্টমার</th>
