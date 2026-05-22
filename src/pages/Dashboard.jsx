@@ -471,7 +471,22 @@ const AdminDashboard = () => {
                 </section>
 
             </main>
-
+   {/* INTEGRATED DEVELOPER CREDIT SIGNATURE */}
+            <div className="mt-6 text-center animate-fade-in pb-5 md:pb-0">
+                <p className="text-xs font-medium text-gray-400 tracking-wide flex items-center justify-center gap-1">
+                    <span>Designed & Developed with</span>
+                    <span className="text-red-500 text-sm animate-pulse">❤️</span>
+                    <span>by</span>
+                    <a
+                        href="https://mostakinahmed.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 font-bold hover:text-green-600 transition-colors duration-200 underline underline-offset-2 decoration-gray-300 hover:decoration-green-500 tracking-wide"
+                    >
+                        Mostakin Ahmed
+                    </a>
+                </p>
+            </div>
         </div>
     );
 };
