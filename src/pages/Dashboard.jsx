@@ -106,7 +106,7 @@ const AdminDashboard = () => {
         <div className="min-h-screen bg-gradient-to-br from-[#7fb2e6] via-[#e0db9b] to-[#daf7a1] font-sans text-gray-800">
 
             {/* Navbar */}
-            <header className="sticky top-0 z-40 backdrop-blur-xl bg-white/70 border-b border-white/20 shadow-sm">
+            <header className="sticky top-0 z-40 backdrop-blur-xl bg-white border-b border-white/20 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
 
                     <div className="flex items-center gap-3">
