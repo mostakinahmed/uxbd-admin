@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios"; // ⚡ ব্যাকএন্ডে রিকোয়েস্ট পাঠানোর জন্য
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import axios from "axios"; 
 import {
     Search,
     Trash2,
@@ -10,7 +10,8 @@ import {
     Package,
     Wallet,
     CheckCircle2,
-    RotateCcw
+    RotateCcw,
+    RefreshCw // ⚡ রিফ্রেশ আইকন ইমপোর্ট করা হলো
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -22,42 +23,42 @@ const AdminDashboard = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false); // লোডিং স্টেট
 
     const itemsPerPage = 4;
-    const API_BASE_URL = "https://uxbd.vercel.app/api/orders"; // আপনার ব্যাকএন্ড ইউআরএল
+    const API_BASE_URL = "https://uxbd.vercel.app/api/orders"; // ব্যাকএন্ড ইউআরএল
 
     // =======================================================
-    // 1. Fetch Orders from Database (GET)
+    // 1. Fetch Orders from Database (GET) - Reusable Function
     // =======================================================
-    useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const response = await axios.get(API_BASE_URL);
-                if (response.data.success) {
-                    setOrders(response.data.data);
-                }
-            } catch (error) {
-                console.error("Failed to fetch orders:", error);
-                alert("ডাটাবেজ থেকে অর্ডার লোড করতে সমস্যা হয়েছে! সার্ভার চেক করুন।");
-            } finally {
-                setIsLoading(false);
+    const fetchOrders = useCallback(async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.get(API_BASE_URL);
+            if (response.data.success) {
+                setOrders(response.data.data);
             }
-        };
-
-        fetchOrders();
+        } catch (error) {
+            console.error("Failed to fetch orders:", error);
+            alert("ডাটাবেজ থেকে অর্ডার লোড করতে সমস্যা হয়েছে! সার্ভার চেক করুন।");
+        } finally {
+            setIsLoading(false);
+        }
     }, []);
+
+    // Initial Load
+    useEffect(() => {
+        fetchOrders();
+    }, [fetchOrders]);
 
     // =======================================================
     // 2. Update Order Status (PUT)
     // =======================================================
     const handleStatusChange = async (id, newStatus) => {
         try {
-            // ডাটাবেজে আপডেট পাঠানো হচ্ছে
             const response = await axios.put(`${API_BASE_URL}/${id}`, { status: newStatus });
             
             if (response.data.success) {
-                // ডাটাবেজে সফল হলে লোকাল স্টেট রিয়েল-টাইমে আপডেট করা
                 setOrders(prev =>
                     prev.map(order =>
                         order._id === id ? { ...order, status: newStatus } : order
@@ -76,14 +77,11 @@ const AdminDashboard = () => {
     const handleDeleteOrder = async (id) => {
         if (window.confirm("আপনি কি নিশ্চিতভাবে এই অর্ডারটি ডিলিট করতে চান?")) {
             try {
-                // ডাটাবেজ থেকে রিমুভ করা হচ্ছে
                 const response = await axios.delete(`${API_BASE_URL}/${id}`);
                 
                 if (response.data.success) {
-                    // লোকাল স্টেট থেকে অর্ডারটি সরিয়ে দেওয়া হচ্ছে
                     setOrders(prev => prev.filter(order => order._id !== id));
                     
-                    // পেজিনেশন অ্যাডজাস্টমেন্ট
                     const totalFilteredPages = Math.ceil((filteredOrders.length - 1) / itemsPerPage);
                     if (currentPage > totalFilteredPages && totalFilteredPages > 0) {
                         setCurrentPage(totalFilteredPages);
@@ -91,7 +89,7 @@ const AdminDashboard = () => {
                 }
             } catch (error) {
                 console.error("Delete Error:", error);
-                alert("অর্ডার ডিলিট করতে সমস্যা হয়েছে!");
+                alert("অর্ডার ডিলিট করতে সমস্যা হয়েছে!");
             }
         }
     };
@@ -105,7 +103,7 @@ const AdminDashboard = () => {
     // Live Metrics Calculations
     // =======================================================
     const metrics = useMemo(() => {
-        const todayStr = new Date().toISOString().split('T')[0]; // আজকের ডেট (YYYY-MM-DD)
+        const todayStr = new Date().toISOString().split('T')[0]; 
         const todayOrders = orders.filter(o => o.date === todayStr);
 
         return {
@@ -124,7 +122,7 @@ const AdminDashboard = () => {
             const matchesSearch =
                 order.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 order.phone?.includes(searchTerm) ||
-                order.orderId?.toLowerCase().includes(searchTerm.toLowerCase()); // Model's orderId used here
+                order.orderId?.toLowerCase().includes(searchTerm.toLowerCase()); 
 
             const matchesStatus =
                 statusFilter === "All" || order.status === statusFilter;
@@ -171,17 +169,32 @@ const AdminDashboard = () => {
                         </div>
                     </div>
                     
-                    <div className="flex md:gap-7 gap-4">
+                    <div className="flex md:gap-4 gap-2 items-center">
+                        
+                        {/* ⚡ Refresh Button */}
+                        <button
+                            onClick={fetchOrders}
+                            disabled={isLoading}
+                            title="Refresh Orders"
+                            className={`p-2.5 rounded-xl border transition-all duration-300 shadow-sm flex items-center justify-center ${
+                                isLoading 
+                                ? "bg-green-50 border-green-200 text-green-500 cursor-not-allowed" 
+                                : "bg-white border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+                            }`}
+                        >
+                            <RefreshCw size={18} className={isLoading ? "animate-spin" : ""} />
+                        </button>
+
                         <button
                             onClick={() => window.open("https://uniquexpress.online/", "_blank")}
-                            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-sm text-white px-5 py-2 rounded-xl font-medium shadow-lg hover:scale-105 transition-all duration-300 hidden md:block"
+                            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-sm text-white px-5 py-2.5 rounded-xl font-medium shadow-lg hover:scale-105 transition-all duration-300 hidden md:block"
                         >
                             🌐 Go Website
                         </button>
             
                         <button
                             onClick={handleLogout}
-                            className="bg-red-500 hover:bg-red-600 text-white font-medium md:px-5 px-3 py-2 text-xs md:text-sm rounded-xl transition-all shadow-md"
+                            className="bg-red-500 hover:bg-red-600 text-white font-medium md:px-5 px-3 py-2.5 text-xs md:text-sm rounded-xl transition-all shadow-md"
                         >
                             Logout
                         </button>
@@ -198,28 +211,24 @@ const AdminDashboard = () => {
                     <MetricCard
                         title="আজকের অর্ডার"
                         value={metrics.todayCount}
-                        subtitle="নতুন অর্ডার রিসিভড"
                         icon={<Package size={28} />}
                         gradient="from-blue-500 to-cyan-400"
                     />
                     <MetricCard
                         title="পেন্ডিং অর্ডার"
                         value={metrics.pendingCount}
-                        subtitle="Action প্রয়োজন"
                         icon={<Clock3 size={28} />}
                         gradient="from-orange-500 to-amber-400"
                     />
                     <MetricCard
                         title="ডেলিভারড"
                         value={metrics.deliveredCount}
-                        subtitle="Successfully delivered"
                         icon={<Truck size={28} />}
                         gradient="from-green-500 to-emerald-400"
                     />
                     <MetricCard
                         title="মোট রেভিনিউ"
                         value={`৳${metrics.salesSum}`}
-                        subtitle="Cash in hand (Delivered)"
                         icon={<Wallet size={28} />}
                         gradient="from-purple-500 to-pink-400"
                     />
@@ -287,7 +296,10 @@ const AdminDashboard = () => {
                                 {isLoading ? (
                                     <tr>
                                         <td colSpan="8" className="text-center py-20 text-gray-500 font-bold">
-                                            <span className="animate-pulse">সার্ভার থেকে ডাটা লোড হচ্ছে...</span>
+                                            <div className="flex flex-col items-center justify-center gap-3">
+                                                <RefreshCw className="animate-spin text-green-500" size={32} />
+                                                <span>সার্ভার থেকে ডাটা রিফ্রেশ হচ্ছে...</span>
+                                            </div>
                                         </td>
                                     </tr>
                                 ) : paginatedOrders.length === 0 ? (
@@ -456,7 +468,7 @@ const AdminDashboard = () => {
 };
 
 // Metric Card Component
-const MetricCard = ({ title, value, subtitle, icon, gradient }) => {
+const MetricCard = ({ title, value, icon, gradient }) => {
     return (
         <div className="bg-white backdrop-blur-xl px-6 py-4 rounded-t-3xl border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:scale-[1.02] transition-all duration-300">
             <div className="flex items-center justify-between">
