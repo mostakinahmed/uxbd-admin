@@ -397,7 +397,7 @@ const AdminDashboard = () => {
                         </table>
                     </div>
 
-                    {/* Pagination Options */}
+                    {/* Pagination vdfeer */}
                     {totalPages > 1 && (
                         <div className="px-6 py-5 bg-gray-50/70 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                             <p className="text-sm text-gray-500 font-semibold">
