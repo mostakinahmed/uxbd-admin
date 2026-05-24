@@ -156,7 +156,7 @@ const AdminDashboard = () => {
 
             {/* Navbar */}
             <header className="sticky top-0 z-40 backdrop-blur-xl bg-white border-b border-white/20 shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+                <div className="max-w-[85%] mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
 
                     <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-orange-400 flex items-center justify-center text-white text-2xl shadow-lg">
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
             </header>
 
             {/* Main */}
-            <main className="max-w-7xl mx-auto px-4 lg:px-8 md:py-8 py-4 space-y-5">
+            <main className="max-w-[85%] mx-auto px-4 lg:px-8 md:py-8 py-4 space-y-5">
 
                 {/* Metrics Cards */}
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -285,6 +285,7 @@ const AdminDashboard = () => {
                                     <th className="px-4 py-4">অর্ডার আইডি</th>
                                     <th className="px-4 py-4">কাস্টমার</th>
                                     <th className="px-4 py-4">ফোন</th>
+                                      <th className="px-3 py-4">ঠিকানা</th>
                                     <th className="px-4 py-4">প্যাকেজ (ওজন)</th>
                                     <th className="px-4 py-4">মোট বিল</th>
                                     <th className="px-4 py-4">তারিখ</th>
@@ -326,6 +327,11 @@ const AdminDashboard = () => {
                                             <td className="px-4 py-3 font-mono text-center">
                                                 {order.phone}
                                             </td>
+                                            {/* address */}
+                                            <td className="px-3 py-3 font-mono text-center">
+                                                {order.address}
+                                            </td>
+
 
                                             {/* Packages Mapping */}
                                             <td className="px-4 py-3 text-center">
