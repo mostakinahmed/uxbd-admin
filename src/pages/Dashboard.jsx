@@ -286,6 +286,7 @@ const AdminDashboard = () => {
                                     <th className="px-4 py-4">কাস্টমার</th>
                                     <th className="px-4 py-4">ফোন</th>
                                       <th className="px-3 py-4">ঠিকানা</th>
+                                       <th className="px-3 py-4">Note</th>
                                     <th className="px-4 py-4">প্যাকেজ (ওজন)</th>
                                     <th className="px-4 py-4">মোট বিল</th>
                                     <th className="px-4 py-4">তারিখ</th>
@@ -328,8 +329,13 @@ const AdminDashboard = () => {
                                                 {order.phone}
                                             </td>
                                             {/* address */}
+                                           <td className="px-3 py-3 font-mono text-center w-[250px] whitespace-pre-wrap break-words">
+  {order.address}
+</td>
+
+                                              {/* address */}
                                             <td className="px-3 py-3 font-mono text-center">
-                                                {order.address}
+                                                {order.notes}
                                             </td>
 
 
