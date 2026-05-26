@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import axios from "axios"; 
+import axios from "axios";
 import {
     Search,
     Trash2,
@@ -57,7 +57,7 @@ const AdminDashboard = () => {
     const handleStatusChange = async (id, newStatus) => {
         try {
             const response = await axios.put(`${API_BASE_URL}/${id}`, { status: newStatus });
-            
+
             if (response.data.success) {
                 setOrders(prev =>
                     prev.map(order =>
@@ -78,10 +78,10 @@ const AdminDashboard = () => {
         if (window.confirm("আপনি কি নিশ্চিতভাবে এই অর্ডারটি ডিলিট করতে চান?")) {
             try {
                 const response = await axios.delete(`${API_BASE_URL}/${id}`);
-                
+
                 if (response.data.success) {
                     setOrders(prev => prev.filter(order => order._id !== id));
-                    
+
                     const totalFilteredPages = Math.ceil((filteredOrders.length - 1) / itemsPerPage);
                     if (currentPage > totalFilteredPages && totalFilteredPages > 0) {
                         setCurrentPage(totalFilteredPages);
@@ -103,7 +103,7 @@ const AdminDashboard = () => {
     // Live Metrics Calculations
     // =======================================================
     const metrics = useMemo(() => {
-        const todayStr = new Date().toISOString().split('T')[0]; 
+        const todayStr = new Date().toISOString().split('T')[0];
         const todayOrders = orders.filter(o => o.date === todayStr);
 
         return {
@@ -122,7 +122,7 @@ const AdminDashboard = () => {
             const matchesSearch =
                 order.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 order.phone?.includes(searchTerm) ||
-                order.orderId?.toLowerCase().includes(searchTerm.toLowerCase()); 
+                order.orderId?.toLowerCase().includes(searchTerm.toLowerCase());
 
             const matchesStatus =
                 statusFilter === "All" || order.status === statusFilter;
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
 
             {/* Navbar */}
             <header className="sticky top-0 z-40 backdrop-blur-xl bg-white border-b border-white/20 shadow-sm">
-                <div className="max-w-[85%] mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+                <div className="md:max-w-[85%] mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
 
                     <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-500 to-orange-400 flex items-center justify-center text-white text-2xl shadow-lg">
@@ -168,19 +168,18 @@ const AdminDashboard = () => {
                             </h1>
                         </div>
                     </div>
-                    
+
                     <div className="flex md:gap-4 gap-2 items-center">
-                        
+
                         {/* ⚡ Refresh Button */}
                         <button
                             onClick={fetchOrders}
                             disabled={isLoading}
                             title="Refresh Orders"
-                            className={`p-2.5 rounded-xl border transition-all duration-300 shadow-sm flex items-center justify-center ${
-                                isLoading 
-                                ? "bg-green-50 border-green-200 text-green-500 cursor-not-allowed" 
-                                : "bg-white border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 hover:border-green-200"
-                            }`}
+                            className={`p-2.5 rounded-xl border transition-all duration-300 shadow-sm flex items-center justify-center ${isLoading
+                                    ? "bg-green-50 border-green-200 text-green-500 cursor-not-allowed"
+                                    : "bg-white border-gray-200 text-gray-600 hover:bg-green-50 hover:text-green-600 hover:border-green-200"
+                                }`}
                         >
                             <RefreshCw size={18} className={isLoading ? "animate-spin" : ""} />
                         </button>
@@ -191,7 +190,7 @@ const AdminDashboard = () => {
                         >
                             🌐 Go Website
                         </button>
-            
+
                         <button
                             onClick={handleLogout}
                             className="bg-red-500 hover:bg-red-600 text-white font-medium md:px-5 px-3 py-2.5 text-xs md:text-sm rounded-xl transition-all shadow-md"
@@ -204,7 +203,7 @@ const AdminDashboard = () => {
             </header>
 
             {/* Main */}
-            <main className="max-w-[85%] mx-auto px-4 lg:px-8 md:py-8 py-4 space-y-5">
+            <main className="md:max-w-[85%] mx-auto px-3 lg:px-8 md:py-8 py-4 space-y-5">
 
                 {/* Metrics Cards */}
                 <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -235,7 +234,7 @@ const AdminDashboard = () => {
                 </section>
 
                 {/* Filters */}
-                <section className="bg-slate-800 backdrop-blur-xl border border-white/30 shadow-xl rounded-b-3xl p-5 flex flex-col lg:flex-row gap-4 justify-between items-center">
+                <section className="bg-slate-800 backdrop-blur-xl border border-white/30 shadow-xl rounded-b-3xl md:p-5 p-2 flex flex-col lg:flex-row gap-4 justify-between items-center">
                     {/* Search */}
                     <div className="relative w-full lg:w-96">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
@@ -285,8 +284,8 @@ const AdminDashboard = () => {
                                     <th className="px-4 py-4">অর্ডার আইডি</th>
                                     <th className="px-4 py-4">কাস্টমার</th>
                                     <th className="px-4 py-4">ফোন</th>
-                                      <th className="px-3 py-4">ঠিকানা</th>
-                                       <th className="px-3 py-4">Note</th>
+                                    <th className="px-3 py-4">ঠিকানা</th>
+                                    <th className="px-3 py-4">Note</th>
                                     <th className="px-4 py-4">প্যাকেজ (ওজন)</th>
                                     <th className="px-4 py-4">মোট বিল</th>
                                     <th className="px-4 py-4">তারিখ</th>
@@ -312,35 +311,35 @@ const AdminDashboard = () => {
                                     </tr>
                                 ) : (
                                     paginatedOrders.map(order => (
-                                        <tr key={order._id} className="border-b border-gray-300 hover:bg-green-50/40 transition-all duration-200">
-                                            
+                                        <tr key={order._id} className="border-b border-yellow-300 hover:bg-green-50/40 transition-all duration-200">
+
                                             {/* Order ID generated by Mongoose */}
-                                            <td className="px-4 py-3 font-mono font-bold text-gray-600 text-center">
+                                            <td className="px-4 py-3 border-r border-slate-300 font-mono font-bold text-gray-600 text-center">
                                                 {order.orderId}
                                             </td>
 
                                             {/* Customer Name */}
-                                            <td className="px-4 py-3 text-center">
+                                            <td className="px-4 py-3   border-r border-slate-300 text-center">
                                                 <p className="font-bold text-gray-900">{order.name}</p>
                                             </td>
 
                                             {/* Phone */}
-                                            <td className="px-4 py-3 font-mono text-center">
+                                            <td className="px-4 py-3  border-r border-slate-300 font-mono text-center">
                                                 {order.phone}
                                             </td>
                                             {/* address */}
-                                           <td className="px-3 py-3 font-mono text-center w-[250px] whitespace-pre-wrap break-words">
-  {order.address}
-</td>
+                                            <td className="px-3 py-3  border-r border-slate-300 font-mono text-center md:w-[250px] md:whitespace-pre-wrap break-words">
+                                                {order.address}
+                                            </td>
 
-                                              {/* address */}
-                                            <td className="px-3 py-3 font-mono text-center">
+                                            {/* address */}
+                                            <td className="px-3 py-3  border-r border-slate-300  font-mono text-center">
                                                 {order.notes}
                                             </td>
 
 
                                             {/* Packages Mapping */}
-                                            <td className="px-4 py-3 text-center">
+                                            <td className="px-4 py-3  border-r border-slate-300 text-center">
                                                 {order.items?.map((item, idx) => (
                                                     <div key={idx} className={idx > 0 ? "mt-2 pt-2 border-t border-gray-200" : ""}>
                                                         <p className="font-semibold text-gray-800">{item.name}</p>
@@ -352,22 +351,21 @@ const AdminDashboard = () => {
                                             </td>
 
                                             {/* Grand Total */}
-                                            <td className="px-4 py-3 font-black text-lg text-gray-900 text-center">
+                                            <td className="px-4 py-3  border-r border-slate-300 font-black text-lg text-gray-900 text-center">
                                                 ৳{order.grandTotal}
                                             </td>
 
                                             {/* Date */}
-                                            <td className="px-4 py-3 text-sm text-gray-500 text-center">
+                                            <td className="px-4 py-3  border-r border-slate-300 text-sm text-gray-500 text-center">
                                                 {order.date}
                                             </td>
 
                                             {/* Status Badge */}
-                                            <td className="px-4 py-3 text-center">
-                                                <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-black border ${
-                                                    order.status === "Delivered"
+                                            <td className="px-4 py-3  border-r border-slate-300 text-center">
+                                                <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-black border ${order.status === "Delivered"
                                                         ? "bg-emerald-100 text-emerald-700 border-emerald-200"
                                                         : "bg-orange-100 text-orange-700 border-orange-200"
-                                                }`}>
+                                                    }`}>
                                                     {order.status === "Delivered" ? <CheckCircle2 size={14} /> : <Clock3 size={14} />}
                                                     {order.status}
                                                 </span>
@@ -426,7 +424,7 @@ const AdminDashboard = () => {
                                 >
                                     <ChevronLeft size={18} />
                                 </button>
-                                
+
                                 {[...Array(totalPages)].map((_, i) => {
                                     const page = i + 1;
                                     return (
@@ -491,7 +489,7 @@ const MetricCard = ({ title, value, icon, gradient }) => {
                     <h2 className="md:text-3xl text-2xl font-black mt-2 text-gray-900">
                         {value}
                     </h2>
-                 
+
                 </div>
                 <div className={`md:w-14 md:h-14 w-12 h-12 rounded-2xl bg-gradient-to-br ${gradient} text-white flex items-center justify-center shadow-lg`}>
                     {icon}
